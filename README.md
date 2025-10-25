@@ -1,407 +1,54 @@
-# Swarm Orchestration System
+# The OS Ecosystem Cartridge
 
-**Version**: 0.1.0
-**Status**: Phase 1 - Foundation
+## 1. Overview & Core Philosophy
 
-## Overview
+This repository, referred to as the "cartridge," is a self-contained, highly-structured monorepo that consolidates a diverse ecosystem of software projects. It is designed to provide a unified, reproducible, and transparent development environment for a wide range of domains, including AI/LLMs, developer tooling, web infrastructure, and governance.
 
-The Swarm Orchestration System coordinates multiple AI agents working together t
-o accomplish complex tasks through role-based collaboration and assembly executi
-on. This system is a core component of the AI Council platform, enabling both de
-velopment workflows and council debate orchestration.
-
-## Architecture
-
-```
-swarm/
-├── orchestrator/           # Core orchestration logic
-│   ├── coordinator.py     # Main swarm coordinator
-│   ├── task_decomposer.py # Task breakdown and planning
-│   └── result_aggregator.py # Result synthesis
-├── roles/                  # Role definitions and management
-│   ├── role_definitions.yaml # Available roles
-│   ├── role_loader.py     # Role loading utilities
-│   └── capabilities.py    # Capability matching
-├── assemblies/            # Assembly definitions
-│   ├── templates/         # Assembly templates
-│   │   ├── feature_development.yaml
-│   │   ├── research_analysis.yaml
-│   │   └── council_debate.yaml
-│   ├── assembly_loader.py # Assembly loading
-│   └── assembly_executor.py # Assembly execution
-└── monitoring/            # Health and progress tracking
-```
-
-## Core Concepts
-
-### Agents
-
-AI agents are autonomous entities that can perform tasks based on their capabili
-ties. Each agent has:
-- **Agent ID**: Unique identifier
-- **Capabilities**: List of skills (e.g., "coding", "research", "moderation")
-- **Status**: Current state (available, assigned, busy)
-- **Role**: Currently assigned role (if any)
-
-### Roles
-
-Roles define specific responsibilities and required capabilities within an assem
-bly:
-- **Name**: Role identifier
-- **Capabilities**: Required skills
-- **Responsibilities**: What the role should accomplish
-- **Dependencies**: Other roles this role depends on
-- **Output Artifacts**: Expected deliverables
-
-### Assemblies
-
-Assemblies are predefined workflows that orchestrate multiple roles to accomplis
-h complex tasks:
-- **Roles**: Required roles for the assembly
-- **Workflow**: Sequence of steps and actions
-- **Success Criteria**: Conditions for successful completion
-- **Metadata**: Tags, priority, duration estimates
-
-### Workflows
-
-Workflows define the execution flow within an assembly:
-- **Steps**: Ordered or parallel actions
-- **Dependencies**: Step prerequisites
-- **Error Handling**: How to handle failures
-- **Timeouts**: Maximum execution time
-
-## Usage
-
-### Basic Example
-
-```python
-from swarm.orchestrator import SwarmCoordinator, ExecutionContext, Agent
-from swarm.assemblies import get_assembly
-
-# Initialize coordinator
-coordinator = SwarmCoordinator()
-
-# Register agents
-coordinator.register_agent(Agent(
-    agent_id="agent_001",
-    name="Developer Bot",
-    capabilities=["coding", "testing", "debugging"]
-))
-
-# Load assembly
-assembly = get_assembly("feature_development")
-
-# Create execution context
-context = ExecutionContext(
-    task_id="task_001",
-    input_data={
-        "feature_requirements": "Add user authentication",
-        "existing_architecture": "..."
-    },
-    constraints={}
-)
-
-# Execute assembly
-result = await coordinator.execute_assembly(assembly, context)
-
-print(f"Status: {result.status}")
-print(f"Outputs: {result.outputs}")
-```
-
-### Creating Custom Roles
-
-Roles are defined in `roles/role_definitions.yaml`:
-
-```yaml
-custom_role:
-  name: "Custom Role"
-  description: "Description of the role"
-  capabilities:
-    - capability1
-    - capability2
-  responsibilities:
-    - "Responsibility 1"
-    - "Responsibility 2"
-  dependencies:
-    - other_role
-  skills_required:
-    - "Skill 1"
-    - "Skill 2"
-  output_artifacts:
-    - "Artifact 1"
-```
-
-### Creating Custom Assemblies
-
-Assemblies are defined in `assemblies/templates/`:
-
-```yaml
-name: "custom_assembly"
-version: "1.0.0"
-description: "Description of assembly"
-
-roles:
-  - name: "role_1"
-    capabilities: [...]
-    responsibilities: [...]
-
-workflow:
-  parallel_execution: false
-  error_handling: "stop"
-  steps:
-    - role: "role_1"
-      action: "do_something"
-      inputs: [...]
-      outputs: [...]
-      timeout: "1h"
-
-success_criteria:
-  required_outputs: [...]
-  quality_threshold: 0.85
-  timeout: "24h"
-```
-
-## Available Roles
-
-### Development
-- **architect**: System architecture and design
-- **developer**: General software development
-- **frontend_developer**: UI/UX development
-- **backend_developer**: Server-side development
-- **blockchain_developer**: Smart contracts and web3
-
-### Quality Assurance
-- **qa_engineer**: Testing and quality assurance
-- **security_auditor**: Security audits and vulnerability assessment
-
-### Research & Analysis
-- **researcher**: Research and investigation
-- **data_analyst**: Data analysis and insights
-
-### Documentation
-- **technical_writer**: Technical documentation
-- **content_creator**: Marketing and educational content
-
-### Project Management
-- **project_manager**: Project coordination
-- **product_owner**: Product requirements and prioritization
-
-### AI Council Specific
-- **council_moderator**: Debate moderation
-- **debate_agent**: Council participation
-- **event_curator**: Event selection and curation
-- **stream_composer**: Live stream management
-- **token_economist**: Token economics design
-
-## Available Assemblies
-
-### Feature Development
-End-to-end feature development workflow with architecture, implementation, testi
-ng, and documentation.
-
-**Roles**: Architect, Developer, QA Engineer, Technical Writer
-**Duration**: 16-24 hours
-**Use Case**: Implementing new features
-
-### Research Analysis
-Comprehensive research workflow with literature review, data analysis, and repor
-t generation.
-
-**Roles**: Researcher, Data Analyst, Technical Writer
-**Duration**: 24-32 hours
-**Use Case**: Conducting research and generating insights
-
-### Council Debate
-Orchestrates AI council debate sessions with topic selection, moderation, and st
-reaming.
-
-**Roles**: Event Curator, Council Moderator, Debate Agents (×5), Stream Composer
-**Duration**: 30-60 minutes
-**Use Case**: Live debate sessions
-
-## Task Decomposition
-
-The `TaskDecomposer` breaks down complex tasks into manageable subtasks:
-
-```python
-from swarm.orchestrator import TaskDecomposer, TaskType
-
-decomposer = TaskDecomposer()
-
-result = await decomposer.decompose_task(
-    task_description="Implement user authentication system",
-    task_type=TaskType.DEVELOPMENT,
-    context={}
-)
-
-print(f"Subtasks: {len(result.subtasks)}")
-print(f"Execution order: {result.execution_order}")
-print(f"Critical path: {result.critical_path}")
-```
-
-## Result Aggregation
-
-The `ResultAggregator` combines outputs from multiple agents:
-
-```python
-from swarm.orchestrator import ResultAggregator, AggregationStrategy
-
-aggregator = ResultAggregator()
-
-result = await aggregator.aggregate(
-    agent_outputs=[...],
-    strategy=AggregationStrategy.CONSENSUS
-)
-
-print(f"Confidence: {result.confidence}")
-print(f"Conflicts: {len(result.conflicts)}")
-```
-
-### Aggregation Strategies
-
-- **MERGE**: Combine all outputs
-- **VOTE**: Majority voting
-- **CONSENSUS**: Require agreement
-- **WEIGHTED**: Weight by confidence
-- **BEST**: Select highest confidence
-- **SEQUENTIAL**: Pipeline processing
-
-## Capability Matching
-
-The `CapabilityMatcher` matches agents to roles:
-
-```python
-from swarm.roles import get_capability_matcher
-
-matcher = get_capability_matcher()
-
-score = matcher.calculate_match_score(
-    agent_capabilities=["coding", "testing"],
-    required_capabilities=["coding", "debugging"]
-)
-
-gap = matcher.get_capability_gap(
-    agent_capabilities=[...],
-    required_capabilities=[...]
-)
-```
-
-## Monitoring
-
-Track assembly execution and agent health:
-
-```python
-# Get active assemblies
-active = coordinator.get_active_assemblies()
-
-# Get execution history
-history = coordinator.get_execution_history()
-
-# Check agent status
-for agent in coordinator.available_agents:
-    print(f"{agent.name}: {agent.status}")
-```
-
-## Error Handling
-
-Assemblies support different error handling strategies:
-
-- **stop**: Stop execution on first error
-- **continue**: Log error and continue with next step
-- **retry**: Retry failed step up to N times
-
-```yaml
-workflow:
-  error_handling: "retry"
-  retry_attempts: 3
-  retry_delay: "5s"
-```
-
-## Best Practices
-
-1. **Role Granularity**: Define roles with clear, focused responsibilities
-2. **Assembly Composition**: Prefer composition over monolithic assemblies
-3. **Error Handling**: Always define appropriate error handling strategies
-4. **Timeouts**: Set realistic timeouts for all steps
-5. **Dependencies**: Minimize role dependencies for parallelization
-6. **Validation**: Always validate outputs against success criteria
-7. **Monitoring**: Track execution metrics and agent health
-
-## Extending the System
-
-### Adding New Capabilities
-
-1. Add capability definition to `roles/capabilities.py`:
-```python
-"new_capability": {
-    "description": "Description",
-    "related_skills": ["skill1", "skill2"],
-}
-```
-
-2. Update role definitions to use new capability
-3. Update agents to include new capability if applicable
-
-### Adding New Roles
-
-1. Define role in `roles/role_definitions.yaml`
-2. Add role to appropriate category
-3. Update assemblies that should use the new role
-
-### Adding New Assemblies
-
-1. Create YAML template in `assemblies/templates/`
-2. Define roles, workflow, and success criteria
-3. Test assembly with coordinator
-4. Document assembly usage
-
-## Testing
-
-```python
-# Test role matching
-from swarm.roles import get_role_loader
-
-loader = get_role_loader()
-role = loader.get_role("developer")
-assert role is not None
-
-# Test assembly loading
-from swarm.assemblies import get_assembly_loader
-
-loader = get_assembly_loader()
-assembly = loader.get_assembly("feature_development")
-assert assembly is not None
-
-# Test coordinator
-coordinator = SwarmCoordinator()
-assert len(coordinator.available_agents) == 0
-```
-
-## Future Enhancements
-
-### Phase 2
-- Dynamic role creation
-- Agent learning and adaptation
-- Real-time assembly modification
-
-### Phase 3
-- Multi-swarm coordination
-- Cross-assembly communication
-- Advanced conflict resolution
-
-### Phase 4
-- Self-organizing swarms
-- Emergent behavior support
-- Decentralized orchestration
-
-## References
-
-- [System Architecture](../docs/architecture/system-architecture.md)
-- [Component Architecture](../docs/architecture/component-architecture.md)
-- [Role Definitions](./roles/role_definitions.yaml)
-- [Assembly Templates](./assemblies/templates/)
+The core philosophy is to treat the entire software development lifecycle—from source code and documentation to governance policies and immutable archives—as a single, coherent system. This approach promotes consistency, simplifies dependency management, and provides a holistic view of all ongoing work.
 
 ---
 
-**Last Updated**: October 23, 2025
-**Maintainer**: Development Team
+## 2. The Cartridge Structure
+
+The cartridge is organized into a set of top-level directories, each with a distinct and critical role. This layered structure separates concerns and clarifies the state and purpose of all artifacts within the system.
+
+-   `governance/`: **The Rulebook.** This directory contains the foundational policies, licenses, and standards that govern the entire ecosystem. It defines the rules of engagement for contributors, including security policies, coding standards, and the code of conduct.
+
+-   `archive/`: **The Museum.** This is an immutable, museum-like store for historical snapshots and curated artifacts. It is designed for long-term preservation and includes yearly snapshots, important research papers, and packaged releases.
+
+-   `workspace/`: **The Workshop.** This is the primary, mutable zone for all active development. It mirrors the structure of the associated GitHub organizations and repositories, providing a local environment for coding, experimentation, and project management.
+
+-   `containers/`: **The Factory.** This directory provides standardized development container templates. It ensures that all developers have access to consistent, reproducible environments for various languages and services, minimizing setup friction and eliminating the "it works on my machine" problem.
+
+-   `environment/`: **The Configuration Hub.** This section manages environment-related documentation and templates. It includes a canonical catalog of all environment variables, mappings of which repositories use them, and a strict policy on secrets management.
+
+-   `cloud/`: **The Bridge.** This directory contains the docking metadata that maps the local cartridge structure to its counterparts in the cloud (specifically GitHub). It defines the relationships between local repositories and their GitHub remotes, local project boards and GitHub Projects, etc.
+
+-   `docs/`: **The Library.** This holds the cartridge-level documentation, explaining the high-level concepts of the ecosystem itself. It covers topics such as the architectural layering, principles of reproducibility, and maintenance procedures.
+
+---
+
+## 3. The Workspace: Active Development Zone
+
+The `workspace` is the heart of the cartridge. It is where all active development takes place and is structured to mirror the cloud-based organization on GitHub:
+
+-   `workspace/orgs/`: Contains local clones of repositories, organized by the GitHub organization they belong to (e.g., `CoreSystems`, `ResearchLab`).
+-   `workspace/repos/`: A space for personal forks, sandboxes, and experimental repositories that are not part of a formal organization.
+-   `workspace/projects/`: Local mirrors of GitHub Projects boards, often represented as `.csv` or `.md` files for tracking and planning.
+-   `workspace/caches/` & `workspace/artifacts/`: Ephemeral directories for build outputs and dependency caches. These are strictly local and ignored by version control.
+
+---
+
+## 4. Project Domains
+
+The repositories housed within this cartridge span a wide array of domains, reflecting a holistic approach to building modern software systems. The key areas of focus include:
+
+-   **🧠 AI, LLMs, and Agentic Tools:** A suite of projects focused on AI models, LLM integration, and building agentic workflows.
+-   **🧰 Developer Tooling & Automation:** Tools that enhance developer workflows, automate CI/CD, and ensure code quality.
+-   **🌐 Web & Docs Infrastructure:** Repositories related to documentation systems, web schemas, and public-facing web content.
+-   **🧪 ML & Data Science:** Core frameworks and tools for machine learning and data-driven workflows.
+-   **🎮 Games & Creative Coding:** Interactive and creative projects that push the boundaries of browser-based experiences.
+-   **🔐 Governance, Security, and Reverse Engineering:** Projects focused on system control, policy enforcement, and software introspection.
+-   **🧬 Symbolic & Experimental:** A collection of repositories that serve as symbolic anchors, poetic identifiers, or experimental namespaces.
+
+This multifaceted approach ensures that the ecosystem is not only a place for building products but also for research, experimentation, and defining the principles that guide our work.
