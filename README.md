@@ -4,6 +4,14 @@
 
 # 4-ivi374-F0Rivi4
 
+[![CI](https://github.com/organvm-i-theoria/4-ivi374-F0Rivi4/actions/workflows/ci.yml/badge.svg)](https://github.com/organvm-i-theoria/4-ivi374-F0Rivi4/actions/workflows/ci.yml)
+[![Coverage](https://img.shields.io/badge/coverage-pending-lightgrey)](https://github.com/organvm-i-theoria/4-ivi374-F0Rivi4)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/organvm-i-theoria/4-ivi374-F0Rivi4/blob/main/LICENSE)
+[![Organ I](https://img.shields.io/badge/Organ-I%20Theoria-8B5CF6)](https://github.com/organvm-i-theoria)
+[![Status](https://img.shields.io/badge/status-active-brightgreen)](https://github.com/organvm-i-theoria/4-ivi374-F0Rivi4)
+[![Markdown](https://img.shields.io/badge/lang-Markdown-informational)](https://github.com/organvm-i-theoria/4-ivi374-F0Rivi4)
+
+
 **OS Ecosystem Cartridge — a meta-framework for holistic software ecosystem architecture with seven governance pillars.**
 
 > Every mature software ecosystem eventually rediscovers the same structural problems: where does governance live? How do workspaces relate to infrastructure? What separates archival truth from active development? The OS Ecosystem Cartridge is a theoretical answer to these recurring questions — a composable, portable unit of ecosystem architecture that treats these concerns as first-class pillars rather than afterthoughts.
