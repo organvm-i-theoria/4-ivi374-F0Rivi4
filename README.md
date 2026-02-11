@@ -221,8 +221,8 @@ This repository sits within ORGAN-I (Theoria), the theoretical arm of the eight-
 | Repository | Organ | Relationship |
 |-----------|-------|-------------|
 | [recursive-engine](https://github.com/organvm-i-theoria/recursive-engine) | I | Core recursion theory — the self-referential patterns that the cartridge model itself exhibits (governance governing governance, docs documenting docs) |
-| [ontology-of-creative-systems](https://github.com/organvm-i-theoria/ontology-of-creative-systems) | I | Naming and classification frameworks that inform pillar definitions and the cartridge taxonomy |
-| [epistemic-artefact-schema](https://github.com/organvm-i-theoria/epistemic-artefact-schema) | I | Schema for knowledge artifacts — directly relevant to the Archive and Docs pillars |
+| ontology-of-creative-systems | I | Naming and classification frameworks that inform pillar definitions and the cartridge taxonomy |
+| epistemic-artefact-schema | I | Schema for knowledge artifacts — directly relevant to the Archive and Docs pillars |
 | [agentic-titan](https://github.com/organvm-iv-taxis/agentic-titan) | IV | Orchestration tooling — potential implementation target for cartridge governance automation |
 | [petasum-super-petasum](https://github.com/organvm-iv-taxis/petasum-super-petasum) | IV | System-of-systems router — the host interface contract may draw from this routing logic |
 | [metasystem-master](https://github.com/organvm-ii-poiesis/metasystem-master) | II | Generative art system — an example of a domain that would be governed by its own cartridge instance |
