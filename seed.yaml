@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # seed.yaml — Automation Contract for organvm-i-theoria/4-ivi374-F0Rivi4
 # Schema: seed/v1.0
 # Updated: AUTONOMY Sprint Phase E (orphan resolution)
@@ -34,3 +35,44 @@ subscriptions:
   - event: health-audit.completed
     source: ORGAN-IV
     action: Review audit findings for this repo
+||||||| parent of 9f650b4 (feat: add seed.yaml (SENSORIA sprint))
+=======
+# seed.yaml — Automation Contract for organvm-i-theoria/4-ivi374-F0Rivi4
+# Schema: seed/v1.0
+# Generated: 2026-02-17 (SENSORIA Sprint)
+
+schema_version: "1.0"
+organ: I
+organ_name: Theory
+repo: 4-ivi374-F0Rivi4
+org: organvm-i-theoria
+
+metadata:
+  implementation_status: ACTIVE
+  tier: standard
+  promotion_status: LOCAL
+  last_validated: "2026-02-12"
+  generated: "2026-02-17"
+  sprint: "SENSORIA"
+  language: mixed
+
+agents:
+  - name: ci
+    trigger: on_push
+    workflow: .github/workflows/ci-python.yml
+    description: "Continuous integration pipeline"
+
+produces:
+  - type: theory
+    description: "Epistemological frameworks, recursive engines, ontological systems"
+
+consumes: []
+
+subscriptions:
+  - event: governance.updated
+    source: ORGAN-IV
+    action: Check compliance with updated governance rules
+  - event: health-audit.completed
+    source: ORGAN-IV
+    action: Review audit findings for this repo
+>>>>>>> 9f650b4 (feat: add seed.yaml (SENSORIA sprint))
